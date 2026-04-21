@@ -41,10 +41,15 @@ void setup()
 	pinMode(LED_BUILTIN, OUTPUT);
 	digitalWrite(LED_BUILTIN, false);
 
-	log_i("Initialize the camera");
-	esp32cam_aithinker_config.frame_size = FRAMESIZE_UXGA;
-	if (cam.init(esp32cam_aithinker_config) != ESP_OK)
-		log_e("Initializing the camera failed");
+log_i("Initialize the camera");
+esp32cam_aithinker_config.frame_size = FRAMESIZE_UXGA;
+if (cam.init(esp32cam_aithinker_config) != ESP_OK)
+    log_e("Initializing the camera failed");
+
+// ROTIRE 180°
+sensor_t * s = esp_camera_sensor_get();
+s->set_vflip(s, 1);
+s->set_hmirror(s, 1);
 
 	log_i("Instance_name: %s", instance_name.c_str());
 
